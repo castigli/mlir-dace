@@ -114,7 +114,7 @@ is equivalent to
 ```mlir
 %s0 = sdir.sym "s0" : !index
 %arr = ... : !sdir.array<?xi32>
-%barr = sdir.bind_sym_shape %arr, [%s0], affine_map<()[s0] -> (s0)> : !sdir.array<?,f32>
+%barr = sdir.bind_sym_shape %arr, [%s0], affine_map<()[s0] -> (s0)> : !sdir.array<?xi32>
 ```
 where `%s0` has a single use, the former is considered the canonical form.
 
@@ -132,7 +132,7 @@ Extract slice from array, follows `memref.subview` semantics.
 
 See: https://mlir.llvm.org/docs/Dialects/MemRef/#memrefsubview-memrefsubviewop
 
-// (G) what are the constrains, I assume it does not have to be contigous, but must be representable with strides and offsets, possibly of reduced rank
+// (G) what are the constrains, I assume it does not have to be contiugous, but must be representable with strides and offsets, possibly of reduced rank
 
 ## Load 
 ```mlir
