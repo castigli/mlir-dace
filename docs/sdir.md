@@ -8,11 +8,29 @@ sdir.sdfg (%arg0: !sdfg.array<1xi32>, %arg1: !sdfg.array<1xi32>) {
 ```
 The start of an SDFG program.
 The provided arguments may be used as outputs (pass-by-reference).
-SDFGs may only contain states, loops, conditionals, and symbolics.
+SDFGs may only contain states and scf state (loops, conditionals) and symbolic ops.
 Executes its body in-order.
 
-// (G) can cf structures be outside a state?
-// (G) can we add explicit examples
+```mlir
+sdir.sdfg (%arg0: !sdfg.array<1xi32>, %arg1: !sdfg.array<1xi32>) {
+  sdir.state {
+    %i = ... !index
+    %a = sdir.load(%arg0)%(i) : i32
+    %c = arith.add %a %a : i32
+    %d = arith.add %c %c : i32
+    sdir.store(%arg1)%(i) %d
+  }
+  sdir.for_state () {
+    sdir.state {...}
+    sdir.state {...}
+    sdir.if_state() {
+      ...
+    }
+  }  
+}
+```
+// for now no continue / break ops
+// disallow index cast?
 
 
 ## States
@@ -25,14 +43,12 @@ sdir.state {
 This represents a grouping of operations, where each independent subgraph of operations is executed in parallel.
 In particular, no ordering of the subgraphs may be assumed.
 The user is responsible for ensuring that there are no data races, which break the correctness of the program.
-States may only contain array accesses, maps, and nested SDFGs.
+States may only contain array load/store, parallel for, and nested SDFGs.
 
-// (G) in SDIR, what is an array access?
-// (G) define subgraph, any SDIR op?
 
 ## Conditionals
 ```mlir
-sdir.if %b  {
+sdir.if_state %b  {
   ...
 }
 ```
@@ -45,7 +61,7 @@ See: https://mlir.llvm.org/docs/Dialects/SCFDialect/#scfif-scfifop
 
 ## Loops
 ```mlir
-sdir.for %iv = %lb to %ub step %step {
+sdir.for_state %iv = %lb to %ub step %step {
   ...
 }
 ```
@@ -56,7 +72,6 @@ State loops can be lowered directly to the SCF dialect and the regular `scf.for`
 
 See: https://mlir.llvm.org/docs/Dialects/SCFDialect/#scffor-scfforop
 
-If implemented with interfaces we might be able to reuse all the core passes.
 
 
 ## Maps (parallel for)
@@ -71,6 +86,8 @@ They may only contain array accesses, maps, and nested SDFGs.
 Can be lowered directly to the SCF dialect and the regular `scf.parallel` constraints apply.
 
 See: https://mlir.llvm.org/docs/Dialects/SCFDialect/#scfparallel-scfparallelop
+
+If implemented with interfaces we might be able to reuse all the core passes.
 
 ## Reduce
 ```mlir
@@ -157,12 +174,6 @@ See: https://mlir.llvm.org/docs/Dialects/MemRef/#memrefalloc-memrefallocop
 sdir.dealloc %arr : !sdir.array<15x?xi32>
 ```
 Deallocation op
-
-## Alloca
-```mlir
-%sarr = sdir.alloca() : !sdir.array<15xi32>
-```
-Stack allocation op
 
 ## Tasklets
 Tasklets are not explictly represented in SDIR, any non-SDIR op (e.g. `arith.add`) would be emitted as a tasklet.
