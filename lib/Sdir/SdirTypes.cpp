@@ -1,0 +1,26 @@
+//===- SdirTypes.cpp - Sdir dialect types -----------*- C++ -*-===//
+//
+// This file is licensed under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+
+#include "Sdir/SdirTypes.h"
+
+#include "Sdir/SdirDialect.h"
+#include "mlir/IR/Builders.h"
+#include "mlir/IR/DialectImplementation.h"
+#include "llvm/ADT/TypeSwitch.h"
+
+using namespace mlir::sdir;
+
+#define GET_TYPEDEF_CLASSES
+#include "Sdir/SdirOpsTypes.cpp.inc"
+
+void SdirDialect::registerTypes() {
+  addTypes<
+#define GET_TYPEDEF_LIST
+#include "Sdir/SdirOpsTypes.cpp.inc"
+      >();
+}

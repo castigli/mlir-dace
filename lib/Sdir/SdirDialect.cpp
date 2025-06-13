@@ -1,0 +1,28 @@
+//===- SdirDialect.cpp - Sdir dialect ---------------*- C++ -*-===//
+//
+// This file is licensed under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+
+#include "Sdir/SdirDialect.h"
+#include "Sdir/SdirOps.h"
+#include "Sdir/SdirTypes.h"
+
+using namespace mlir;
+using namespace mlir::sdir;
+
+#include "Sdir/SdirOpsDialect.cpp.inc"
+
+//===----------------------------------------------------------------------===//
+// Sdir dialect.
+//===----------------------------------------------------------------------===//
+
+void SdirDialect::initialize() {
+  addOperations<
+#define GET_OP_LIST
+#include "Sdir/SdirOps.cpp.inc"
+      >();
+  registerTypes();
+}

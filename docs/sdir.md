@@ -12,13 +12,13 @@ SDFGs may only contain states and scf state (loops, conditionals) and symbolic o
 Executes its body in-order.
 
 ```mlir
-sdir.sdfg (%arg0: !sdfg.array<1xi32>, %arg1: !sdfg.array<1xi32>) {
+sdir.sdfg (%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
   sdir.state {
-    %i = ... !index
-    %a = sdir.load(%arg0)%(i) : i32
+    %c0 = arith.constant 0 : index
+    %a = sdir.load %arg0 [%c0] : !sdfg.array<2xi32>
     %c = arith.add %a %a : i32
     %d = arith.add %c %c : i32
-    sdir.store(%arg1)%(i) %d
+    sdir.store %d, %arg1 [%c0] : !sdfg.array<1xi32>
   }
   sdir.for_state () {
     sdir.state {...}
@@ -27,10 +27,13 @@ sdir.sdfg (%arg0: !sdfg.array<1xi32>, %arg1: !sdfg.array<1xi32>) {
       ...
     }
   }  
+  sdir.state ( ) {
+
+  }
 }
 ```
-// for now no continue / break ops
-// disallow index cast?
+// (G) for now no continue / break ops
+// (G) disallow index cast?
 
 
 ## States
@@ -39,6 +42,17 @@ sdir.state {
   
 }
 ```
+
+or could this be
+
+```mlir 
+scf.if {
+  sdir.state {
+    ....
+  }
+}
+```
+
 
 This represents a grouping of operations, where each independent subgraph of operations is executed in parallel.
 In particular, no ordering of the subgraphs may be assumed.
@@ -80,6 +94,7 @@ sdir.parallel (%iv) = (%lb) to (%ub) step (%step) {
   ...
 }
 ```
+// (G) is a map closer to linalg generic?
 
 Maps are represented using the parallel op.
 They may only contain array accesses, maps, and nested SDFGs.
