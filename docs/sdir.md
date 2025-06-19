@@ -6,7 +6,7 @@ sdir.sdfg (%arg0: !sdfg.array<1xi32>, %arg1: !sdfg.array<1xi32>) {
 ...
 }
 ```
-The start of an SDFG program.
+The start of an SDFG region.
 The provided arguments may be used as outputs (pass-by-reference).
 SDFGs may only contain states and scf state (loops, conditionals) and symbolic ops.
 Executes its body in-order.
@@ -34,6 +34,7 @@ sdir.sdfg (%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
 ```
 // (G) for now no continue / break ops
 // (G) disallow index cast?
+// (G) limit arguments to sdir.array?
 
 
 ## States

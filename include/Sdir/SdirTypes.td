@@ -22,14 +22,6 @@ class Sdir_Type<string name, string typeMnemonic, list<Trait> traits = []>
   let mnemonic = typeMnemonic;
 }
 
-def Sdir_CustomType : Sdir_Type<"Custom", "custom"> {
-    let summary = "Sdir custom type";
-    let description = "Custom type in Sdir dialect";
-    let parameters = (ins StringRefParameter<"the custom value">:$value);
-    let assemblyFormat = "`<` $value `>`";
-}
-
-
 //===----------------------------------------------------------------------===//
 // ArrayType
 //===----------------------------------------------------------------------===//
@@ -83,26 +75,22 @@ def Sdir_ArrayType : Sdir_Type<"Array", "array", [ShapedTypeInterface]> {
   // let genVerifyDecl = 1;
   // let genStorageClass = 0;
 
-  // let builders = [
-  //   TypeBuilderWithInferredContext<(ins
-  //       "llvm::ArrayRef<int64_t>":$shape,
-  //       "mlir::Type":$elementType,
-  //       "Attribute":$encoding), [{
-  //     return get(elementType.getContext(), shape, elementType, encoding, ShapedType::kDynamic);
-  //   }]>,
-  //   TypeBuilderWithInferredContext<(ins
-  //       "llvm::ArrayRef<int64_t>":$shape,
-  //       "mlir::Type":$elementType,
-  //       "Attribute":$encoding,
-  //       "int64_t":$lds), [{
-  //     return get(elementType.getContext(), shape, elementType, encoding, lds);
-  //   }]>
-  // ];
-
   let hasCustomAssemblyFormat = 1;
 }
 
+// Whether a type is a ArrayType.
+def IsArrayTypePred : CPred<"::llvm::isa<::mlir::sdir::ArrayType>($_self)">;
 
+// Any array type whose element type is from the given `allowedTypes`
+// list, and which additionally satisfies an optional list of predicates.
+class ArrayOf<
+    list<Type> allowedTypes,
+    list<Pred> preds = [],
+    string summary = "array">
+  : ShapedContainerType<allowedTypes,
+      And<!listconcat([IsArrayTypePred], preds)>,
+      summary, "::mlir::sdir::ArrayType">;
 
+def AnyArray  : ArrayOf<[AnyType]>;
 
 #endif // Sdir_TYPES
