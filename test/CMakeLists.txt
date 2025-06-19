@@ -16,9 +16,9 @@ set(SDIR_TEST_DEPENDS
         sdir-translate
         SdirPlugin
         )
-if(MLIR_ENABLE_BINDINGS_PYTHON)
-  list(APPEND SDIR_TEST_DEPENDS SdirPythonModules)
-endif()
+# if(MLIR_ENABLE_BINDINGS_PYTHON)
+#   list(APPEND SDIR_TEST_DEPENDS SdirPythonModules)
+# endif()
 
 add_lit_testsuite(check-sdir "Running the sdir regression tests"
         ${CMAKE_CURRENT_BINARY_DIR}

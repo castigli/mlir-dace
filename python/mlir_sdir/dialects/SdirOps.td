@@ -6,8 +6,8 @@
 //
 //===---------------------------------------------------------------------===//
 
-#ifndef PYTHON_BINDINGS_Sdir_OPS
-#define PYTHON_BINDINGS_Sdir_OPS
+#ifndef PYTHON_BINDINGS_SDIR_OPS
+#define PYTHON_BINDINGS_SDIR_OPS
 
 include "Sdir/SdirOps.td"
 
