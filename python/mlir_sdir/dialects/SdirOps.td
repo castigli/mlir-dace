@@ -9,6 +9,6 @@
 #ifndef PYTHON_BINDINGS_SDIR_OPS
 #define PYTHON_BINDINGS_SDIR_OPS
 
-include "Sdir/SdirOps.td"
+include "Sdir/IR/SdirOps.td"
 
 #endif

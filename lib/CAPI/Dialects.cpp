@@ -8,7 +8,7 @@
 
 #include "Sdir-c/Dialects.h"
 
-#include "Sdir/SdirDialect.h"
+#include "Sdir/IR/SdirDialect.h"
 #include "mlir/CAPI/Registration.h"
 
 MLIR_DEFINE_CAPI_DIALECT_REGISTRATION(Sdir, sdir,

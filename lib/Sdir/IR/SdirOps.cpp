@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "Sdir/SdirOps.h"
-#include "Sdir/SdirDialect.h"
+#include "Sdir/IR/SdirOps.h"
+#include "Sdir/IR/SdirDialect.h"
 
 #define GET_OP_CLASSES
 #include "Sdir/SdirOps.cpp.inc"

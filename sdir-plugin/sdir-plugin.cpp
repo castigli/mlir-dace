@@ -10,8 +10,8 @@
 #include "mlir/InitAllDialects.h"
 #include "mlir/Tools/Plugins/DialectPlugin.h"
 
-#include "Sdir/SdirDialect.h"
-#include "Sdir/SdirPasses.h"
+#include "Sdir/IR/SdirDialect.h"
+#include "Sdir/Transforms/SdirPasses.h"
 #include "mlir/Tools/Plugins/PassPlugin.h"
 #include "llvm/Config/llvm-config.h"
 #include "llvm/Support/Compiler.h"

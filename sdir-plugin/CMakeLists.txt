@@ -4,12 +4,14 @@ add_llvm_library(SdirPlugin
         sdir-plugin.cpp
 
         DEPENDS
-        MLIRSdir
+        MLIRSdirIR
+        MLIRSdirTransforms
         PLUGIN_TOOL
         mlir-opt
 
         LINK_LIBS
-        MLIRSdir
+        MLIRSdirIR
+        MLIRSdirTransforms
         )
 target_include_directories(
         SdirPlugin

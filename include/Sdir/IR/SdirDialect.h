@@ -12,6 +12,6 @@
 #include "mlir/Bytecode/BytecodeOpInterface.h"
 #include "mlir/IR/Dialect.h"
 
-#include "Sdir/SdirOpsDialect.h.inc"
+#include "Sdir/IR/SdirOpsDialect.h.inc"
 
 #endif // SDIR_SDIRDIALECT_H

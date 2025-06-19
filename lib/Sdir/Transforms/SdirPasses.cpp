@@ -10,7 +10,7 @@
 #include "mlir/Rewrite/FrozenRewritePatternSet.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
 
-#include "Sdir/SdirPasses.h"
+#include "Sdir/Transforms/SdirPasses.h"
 
 namespace mlir::sdir {
 #define GEN_PASS_DEF_SDIRSWITCHBARFOO

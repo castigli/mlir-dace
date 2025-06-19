@@ -9,7 +9,7 @@
 #ifndef SDIR_OPS
 #define SDIR_OPS
 
-include "Sdir/SdirTypes.td"
+include "Sdir/IR/SdirTypes.td"
 include "mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 include "mlir/IR/SymbolInterfaces.td"

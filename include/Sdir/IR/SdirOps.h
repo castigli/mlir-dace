@@ -9,7 +9,7 @@
 #ifndef SDIR_SDIROPS_H
 #define SDIR_SDIROPS_H
 
-#include "Sdir/SdirTypes.h"
+#include "Sdir/IR/SdirTypes.h"
 
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/BuiltinOps.h"

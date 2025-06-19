@@ -12,8 +12,8 @@
 #include "mlir/Support/FileUtilities.h"
 #include "mlir/Tools/mlir-opt/MlirOptMain.h"
 
-#include "Sdir/SdirDialect.h"
-#include "Sdir/SdirPasses.h"
+#include "Sdir/IR/SdirDialect.h"
+#include "Sdir/Transforms/SdirPasses.h"
 
 int main(int argc, char **argv) {
   mlir::registerAllPasses();

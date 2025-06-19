@@ -8,8 +8,8 @@
 #ifndef SDIR_SDIRPASSES_H
 #define SDIR_SDIRPASSES_H
 
-#include "Sdir/SdirDialect.h"
-#include "Sdir/SdirOps.h"
+#include "Sdir/IR/SdirDialect.h"
+#include "Sdir/IR/SdirOps.h"
 #include "mlir/Pass/Pass.h"
 #include <memory>
 

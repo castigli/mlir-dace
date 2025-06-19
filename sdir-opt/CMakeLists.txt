@@ -5,7 +5,8 @@ set(LIBS
         ${conversion_libs}
         MLIRArithDialect
         MLIROptLib
-        MLIRSdir
+        MLIRSdirIR
+        MLIRSdirTransforms
         )
 add_llvm_executable(sdir-opt sdir-opt.cpp)
 

@@ -11,7 +11,7 @@
 
 include "mlir/IR/AttrTypeBase.td"
 include "mlir/IR/BuiltinTypeInterfaces.td"
-include "Sdir/SdirDialect.td"
+include "Sdir/IR/SdirDialect.td"
 
 //===----------------------------------------------------------------------===//
 // Sdir type definitions

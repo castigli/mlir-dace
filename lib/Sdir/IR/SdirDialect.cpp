@@ -6,9 +6,9 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "Sdir/SdirDialect.h"
-#include "Sdir/SdirOps.h"
-#include "Sdir/SdirTypes.h"
+#include "Sdir/IR/SdirDialect.h"
+#include "Sdir/IR/SdirOps.h"
+#include "Sdir/IR/SdirTypes.h"
 
 using namespace mlir;
 using namespace mlir::sdir;

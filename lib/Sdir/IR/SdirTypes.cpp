@@ -6,9 +6,9 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "Sdir/SdirTypes.h"
+#include "Sdir/IR/SdirTypes.h"
 
-#include "Sdir/SdirDialect.h"
+#include "Sdir/IR/SdirDialect.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/BuiltinAttributeInterfaces.h"
 #include "mlir/IR/DialectImplementation.h"
