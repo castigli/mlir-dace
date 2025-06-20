@@ -91,4 +91,35 @@ def Sdir_SdfgOp : Sdir_Op<"sdfg", [
 
 }
 
+//===----------------------------------------------------------------------===//
+// SdfgCallOp
+//===----------------------------------------------------------------------===//
+
+def SdfgCallOp : Sdir_Op<"call.sdfg",
+    [DeclareOpInterfaceMethods<CallOpInterface>]> {
+  let summary = "sdfg call operation";
+  let description = [{
+   
+    ```mlir
+    sdir.call.sdfg @mysdfg(%1, %3)
+           : (!sdir.array<2xi32>, !sdir.array<1xi32>)
+    ```
+
+  
+  }];
+
+  // The call operation takes a symbol reference attribute as the
+  // callee, and inputs for the call.
+  let arguments = (ins FlatSymbolRefAttr:$callee, Variadic<AnyArray>:$inputs);
+
+
+  let assemblyFormat = [{
+    $callee `(` $inputs `)` attr-dict `:` type($inputs)
+  }];
+
+  let builders = [
+    OpBuilder<(ins "StringRef":$callee, "ArrayRef<Value>":$arguments)>
+  ];
+}
+
 #endif // SDIR_OPS

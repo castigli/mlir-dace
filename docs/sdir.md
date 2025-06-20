@@ -24,7 +24,7 @@ sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
     sdir.state {...}
     sdir.state {...}
     sdir.if_state() {
-      call @sdfg1(%arg1: !sdfg.array<1xi32>)
+      call @sdfg1(%arg1: !sdfg.array<1xi32>) { ... }
     }
   }  
   sdir.state ( ) {

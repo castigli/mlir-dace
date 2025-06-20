@@ -51,3 +51,36 @@ void SdfgOp::print(mlir::OpAsmPrinter &p) {
       p, *this, /*isVariadic=*/false, getFunctionTypeAttrName(),
       getArgAttrsAttrName(), getResAttrsAttrName());
 }
+
+//===----------------------------------------------------------------------===//
+// SdfgCallOp
+//===----------------------------------------------------------------------===//
+void SdfgCallOp::build(mlir::OpBuilder &builder, mlir::OperationState &state,
+                       StringRef callee, ArrayRef<mlir::Value> arguments) {
+  // SdfgCall does not return any values, so we do not add any types to the state.
+  state.addOperands(arguments);
+  state.addAttribute("callee",  
+    mlir::SymbolRefAttr::get(builder.getContext(), callee));
+}     
+
+/// Return the callee of the sdfg Call operation, this is required by the
+/// call interface.
+CallInterfaceCallable SdfgCallOp::getCallableForCallee() {
+  return (*this)->getAttrOfType<SymbolRefAttr>("callee");
+}
+
+/// Set the callee for the sdfg call operation, this is required by the call
+/// interface.
+void SdfgCallOp::setCalleeFromCallable(CallInterfaceCallable callee) {
+  (*this)->setAttr("callee", cast<SymbolRefAttr>(callee));
+}
+
+/// Get the argument operands to the called function, this is required by the
+/// call interface.
+Operation::operand_range SdfgCallOp::getArgOperands() { return getInputs(); }
+
+/// Get the argument operands to the called function as a mutable range, this is
+/// required by the call interface.
+MutableOperandRange SdfgCallOp::getArgOperandsMutable() {
+  return getInputsMutable();
+}
