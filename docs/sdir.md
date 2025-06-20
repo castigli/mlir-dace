@@ -24,7 +24,7 @@ sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
     sdir.state {...}
     sdir.state {...}
     sdir.if_state() {
-      ...
+      call @sdfg1(%arg1: !sdfg.array<1xi32>)
     }
   }  
   sdir.state ( ) {
@@ -47,27 +47,26 @@ sdir.state {
 }
 ```
 
-or could this be
-
-```mlir 
-scf.if {
-  sdir.state {
-    ....
-  }
-}
-```
-
-
-This represents a grouping of operations, where each independent subgraph of operations is executed in parallel.
+This represents a grouping of operations, where each independent subgraph of operations can be executed in parallel.
 In particular, no ordering of the subgraphs may be assumed.
 The user is responsible for ensuring that there are no data races, which break the correctness of the program.
 States may only contain array load/store, parallel for, and nested SDFGs.
 
+// (G) do you ever have to refer to a state
 
 ## Conditionals
 ```mlir
-sdir.if_state %b  {
+sdir.if_state %c  {
   ...
+}
+```
+or could this be
+
+```mlir 
+scf.if %c {
+  sdir.state {
+    ....
+  }
 }
 ```
 

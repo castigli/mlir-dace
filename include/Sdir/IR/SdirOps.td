@@ -56,8 +56,8 @@ def Sdir_SdfgOp : Sdir_Op<"sdfg", [
             }
         }
         ```
-
-        // TODO: limit allowed types as arguments.
+        // TODO: add invariants to verifier
+        // -  limit allowed types as arguments (only sdir.array?)
         // TODO: check no return value in verifier
     }];
 
