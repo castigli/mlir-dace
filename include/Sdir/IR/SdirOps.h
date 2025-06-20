@@ -17,8 +17,11 @@
 #include "mlir/IR/OpDefinition.h"
 #include "mlir/Interfaces/InferTypeOpInterface.h"
 #include "mlir/Interfaces/SideEffectInterfaces.h"
+#include "mlir/Interfaces/CallInterfaces.h"
+#include "mlir/Interfaces/FunctionImplementation.h"
+
 
 #define GET_OP_CLASSES
-#include "Sdir/SdirOps.h.inc"
+#include "Sdir/IR/SdirOps.h.inc"
 
 #endif // SDIR_SDIROPS_H

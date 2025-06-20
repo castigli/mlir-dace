@@ -11,36 +11,10 @@
 
 include "Sdir/IR/SdirTypes.td"
 include "mlir/Interfaces/InferTypeOpInterface.td"
+include "mlir/Interfaces/FunctionInterfaces.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 include "mlir/IR/SymbolInterfaces.td"
 include "mlir/IR/OpBase.td"
-
-def Sdir_FooOp : Sdir_Op<"foo", [Pure,
-                                             SameOperandsAndResultType]> {
-    let summary = "Illustrates how to define an operation.";
-    let description = [{
-        The `Sdir.foo` operation illustrates how to define a new
-        operation in a dialect. It uses an operation trait to declare that it
-        has no side effects.
-
-        This operation takes an integer argument and returns an integer.
-
-        Example:
-
-        ```mlir
-        %0 = arith.constant 2 : i32
-        // Apply the foo operation to %0
-        %1 = Sdir.foo %0 : i32
-        ```
-    }];
-
-    let arguments = (ins I32:$input);
-    let results = (outs I32:$res);
-
-    let assemblyFormat = [{
-        $input attr-dict `:` type($input)
-    }];
-}
 
 
 //===----------------------------------------------------------------------===//
@@ -49,10 +23,10 @@ def Sdir_FooOp : Sdir_Op<"foo", [Pure,
 
 
 def Sdir_SdfgOp : Sdir_Op<"sdfg", [
-    ParentOneOf<["ModuleOp"]>,
-    NoTerminator,
-    IsolatedFromAbove
-    // DeclareOpInterfaceMethods<SymbolUserOpInterface>
+  FunctionOpInterface, 
+  IsolatedFromAbove,
+  NoTerminator,
+  SingleBlock
 ]> {
     let summary = "SDFG region";
     let description = [{
@@ -62,7 +36,7 @@ def Sdir_SdfgOp : Sdir_Op<"sdfg", [
         For example:
 
         ```mlir
-        sdir.sdfg (%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
+        sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
             sdir.state {
                 %c0 = arith.constant 0 : index
                 %a = sdir.load %arg0 [%c0] : !sdfg.array<2xi32>
@@ -84,13 +58,36 @@ def Sdir_SdfgOp : Sdir_Op<"sdfg", [
         ```
 
         // TODO: limit allowed types as arguments.
+        // TODO: check no return value in verifier
     }];
 
-    let arguments = (ins
-        Variadic<AnyArray>:$arguments
-    );
+  let arguments = (ins
+    SymbolNameAttr:$sym_name,
+    TypeAttrOf<FunctionType>:$function_type,
+    OptionalAttr<DictArrayAttr>:$arg_attrs,
+    OptionalAttr<DictArrayAttr>:$res_attrs
+  );
+  let regions = (region SizedRegion<1>:$body);
 
-    let regions = (region SizedRegion<1>:$body);
+  let builders = [OpBuilder<(ins
+    "StringRef":$name, "FunctionType":$type,
+    CArg<"ArrayRef<NamedAttribute>", "{}">:$attrs)
+  >];
+  let extraClassDeclaration = [{
+    //===------------------------------------------------------------------===//
+    // FunctionOpInterface Methods
+    //===------------------------------------------------------------------===//
+
+    /// Returns the argument types of this function.
+    ArrayRef<Type> getArgumentTypes() { return getFunctionType().getInputs(); }
+
+    /// Returns the result types of this function.
+    ArrayRef<Type> getResultTypes() { return getFunctionType().getResults(); }
+
+    Region *getCallableRegion() { return &getBody(); }
+  }];
+  let hasCustomAssemblyFormat = 1;
+  let skipDefaultBuilders = 1;
 
 }
 

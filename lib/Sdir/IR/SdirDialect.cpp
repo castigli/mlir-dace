@@ -13,7 +13,7 @@
 using namespace mlir;
 using namespace mlir::sdir;
 
-#include "Sdir/SdirOpsDialect.cpp.inc"
+#include "Sdir/IR/SdirOpsDialect.cpp.inc"
 
 //===----------------------------------------------------------------------===//
 // Sdir dialect.
@@ -22,7 +22,7 @@ using namespace mlir::sdir;
 void SdirDialect::initialize() {
   addOperations<
 #define GET_OP_LIST
-#include "Sdir/SdirOps.cpp.inc"
+#include "Sdir/IR/SdirOps.cpp.inc"
       >();
   registerTypes();
 }

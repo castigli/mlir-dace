@@ -12,7 +12,7 @@ SDFGs may only contain states and scf state (loops, conditionals) and symbolic o
 Executes its body in-order.
 
 ```mlir
-sdir.sdfg (%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
+sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
   sdir.state {
     %c0 = arith.constant 0 : index
     %a = sdir.load %arg0 [%c0] : !sdfg.array<2xi32>
@@ -32,9 +32,12 @@ sdir.sdfg (%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
   }
 }
 ```
-// (G) for now no continue / break ops
-// (G) disallow index cast?
+// for now no continue / break ops
+// disallow index cast
+
 // (G) limit arguments to sdir.array?
+// (G) what is the semantic of sdfg, func call?
+//   if so, it needs a symbol 
 
 
 ## States

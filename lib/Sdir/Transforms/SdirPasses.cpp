@@ -14,7 +14,7 @@
 
 namespace mlir::sdir {
 #define GEN_PASS_DEF_SDIRSWITCHBARFOO
-#include "Sdir/SdirPasses.h.inc"
+#include "Sdir/Transforms/SdirPasses.h.inc"
 
 namespace {
 class SdirSwitchBarFooRewriter : public OpRewritePattern<func::FuncOp> {

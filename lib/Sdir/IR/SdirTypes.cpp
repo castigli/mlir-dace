@@ -17,12 +17,12 @@
 using namespace mlir::sdir;
 
 #define GET_TYPEDEF_CLASSES
-#include "Sdir/SdirOpsTypes.cpp.inc"
+#include "Sdir/IR/SdirOpsTypes.cpp.inc"
 
 void SdirDialect::registerTypes() {
   addTypes<
 #define GET_TYPEDEF_LIST
-#include "Sdir/SdirOpsTypes.cpp.inc"
+#include "Sdir/IR/SdirOpsTypes.cpp.inc"
       >();
 }
 

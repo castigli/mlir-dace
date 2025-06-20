@@ -16,10 +16,10 @@
 namespace mlir {
 namespace sdir {
 #define GEN_PASS_DECL
-#include "Sdir/SdirPasses.h.inc"
+#include "Sdir/Transforms/SdirPasses.h.inc"
 
 #define GEN_PASS_REGISTRATION
-#include "Sdir/SdirPasses.h.inc"
+#include "Sdir/Transforms/SdirPasses.h.inc"
 } // namespace sdir
 } // namespace mlir
 

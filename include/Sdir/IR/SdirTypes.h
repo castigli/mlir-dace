@@ -12,6 +12,6 @@
 #include "mlir/IR/BuiltinTypes.h"
 
 #define GET_TYPEDEF_CLASSES
-#include "Sdir/SdirOpsTypes.h.inc"
+#include "Sdir/IR/SdirOpsTypes.h.inc"
 
 #endif // SDIR_SDIRTYPES_H
