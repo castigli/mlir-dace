@@ -91,6 +91,6 @@ class ArrayOf<
       And<!listconcat([IsArrayTypePred], preds)>,
       summary, "::mlir::sdir::ArrayType">;
 
-def AnyArray  : ArrayOf<[AnyType]>;
+def AnyArray  : ArrayOf<[AnyType]>; // TODO costrains int/float/complex 
 
 #endif // Sdir_TYPES

@@ -11,6 +11,9 @@ The provided arguments may be used as outputs (pass-by-reference).
 SDFGs may only contain states and scf state (loops, conditionals) and symbolic ops.
 Executes its body in-order.
 
+// TODO check for recursion?
+
+
 ```mlir
 sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
   sdir.state {
@@ -24,7 +27,7 @@ sdir.sdfg @sdfg0(%arg0: !sdfg.array<2xi32>, %arg1: !sdfg.array<1xi32>) {
     sdir.state {...}
     sdir.state {...}
     sdir.if_state() {
-      call @sdfg1(%arg1: !sdfg.array<1xi32>) { ... }
+      sdir.call.sdfg @sdfg1(%arg1: !sdfg.array<1xi32>) { ... }
     }
   }  
   sdir.state ( ) {
@@ -155,6 +158,8 @@ where `%s0` has a single use, the former is considered the canonical form.
 
 See: https://mlir.llvm.org/docs/Dialects/Builtin/#memreftype
 
+// TODO costraint type
+
 ## Slices (views) 
 
 ```mlir
@@ -195,3 +200,10 @@ Deallocation op
 
 ## Tasklets
 Tasklets are not explictly represented in SDIR, any non-SDIR op (e.g. `arith.add`) would be emitted as a tasklet.
+
+
+
+# Next steps
+- fix inlining
+- state ops
+- load / store ops
