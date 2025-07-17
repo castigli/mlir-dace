@@ -1,4 +1,5 @@
 // RUN: sdir-opt %s | sdir-opt | FileCheck %s
+// RUN: sdir-opt %s --inline | FileCheck %s --check-prefix=INLINE
 
 module {
     // CHECK: sdir.sdfg @sdfg0(%arg0: !sdir.array<2xi32>, %arg1: !sdir.array<1xi32>) {
@@ -7,7 +8,8 @@ module {
         sdir.sdfg.return
     }
 
-
+    // INLINE: sdir.sdfg @sdfg0(%arg0: !sdir.array<2xi32>, %arg1: !sdir.array<1xi32>) {
+    // INLINE-NEXT:   sdir.sdfg.return
     sdir.sdfg @sdfg1(%arg0: !sdir.array<2xi32>, %arg1: !sdir.array<1xi32>) {
         sdir.sdfg.call @sdfg0(%arg0, %arg1) : !sdir.array<2xi32>, !sdir.array<1xi32>
         sdir.sdfg.return

@@ -50,17 +50,14 @@ struct SdirInlinerInterface : public DialectInlinerInterface {
   // Transformation Hooks
   //===--------------------------------------------------------------------===//
 
-  // /// Handle the given inlined terminator(sdir.return) by replacing it with a new
-  // /// operation as necessary.
-  // void handleTerminator(Operation *op, ValueRange valuesToRepl) const final {
-  //   // Only "sdir.return" needs to be handled here.
-  //   auto returnOp = cast<ReturnOp>(op);
-
-  //   // Replace the values directly with the return operands.
-  //   assert(returnOp.getNumOperands() == valuesToRepl.size());
-  //   for (const auto &it : llvm::enumerate(returnOp.getOperands()))
-  //     valuesToRepl[it.index()].replaceAllUsesWith(it.value());
-  // }
+  /// Handle the given inlined terminator(sdir.return) by replacing it with a new
+  /// operation as necessary.
+  void handleTerminator(Operation *op, ValueRange valuesToRepl) const final {
+    // We never ruturn values from a call to an sdfg
+    assert(valuesToRepl.empty() &&
+           "SdirInlinerInterface::handleTerminator should not be called with "
+           "values to replace");
+  }
 
   /// Attempts to materialize a conversion for a type mismatch between a call
   /// from this dialect, and a callable region. This method should generate an

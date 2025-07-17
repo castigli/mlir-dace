@@ -23,25 +23,6 @@ include "mlir/IR/OpBase.td"
 //===----------------------------------------------------------------------===//
 
 
-def Sdir_SdfgReturnOp : Sdir_Op<"sdfg.return",
-    [NoMemoryEffect, Terminator,
-     ParentOneOf<["SdfgOp"]>]> {
-  let summary = "special terminator for use in sdfg operations";
-
-  let description = [{
-    Terminator for sdir.sdfg operations. This operation is used to implicitlly 
-    terminate the body of an SDFG region and need not appear in the textual
-    representation.
-    It is a workaround for the FunctionOpInterface machinery which requires 
-    a terminator and dor not support the NoTerminator trait.    
-  }];
-
-  let assemblyFormat = [{
-    attr-dict
-  }];
-
-}
-
 def Sdir_SdfgOp : Sdir_Op<"sdfg", [
   // SingleBlockImplicitTerminator<"SdfgReturnOp">,
   FunctionOpInterface, 
@@ -139,6 +120,25 @@ def SdfgCallOp : Sdir_Op<"sdfg.call",
   let builders = [
     OpBuilder<(ins "StringRef":$callee, "ArrayRef<Value>":$arguments)>
   ];
+}
+
+def Sdir_SdfgReturnOp : Sdir_Op<"sdfg.return",
+    [Pure, Terminator,
+     HasParent<"SdfgOp">]> {
+  let summary = "special terminator for use in sdfg operations";
+
+  let description = [{
+    Terminator for sdir.sdfg operations. This operation is used to implicitlly 
+    terminate the body of an SDFG region and need not appear in the textual
+    representation.
+    It is a workaround for the FunctionOpInterface machinery which requires 
+    a terminator and dor not support the NoTerminator trait.    
+  }];
+
+  let assemblyFormat = [{
+    attr-dict
+  }];
+
 }
 
 #endif // SDIR_OPS
